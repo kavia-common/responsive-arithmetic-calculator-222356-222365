@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useCallback } from "react";
 
 /**
  * PUBLIC_INTERFACE
  * KeyButton
- * A reusable calculator button.
+ * A reusable calculator button with subtle ripple and scale micro-animations.
  *
  * Props:
  * - label: string | ReactNode - visible label on the button
@@ -17,14 +17,15 @@ function KeyButton({ label, ariaLabel, variant = "digit", onPress }) {
     border: "1px solid var(--ocean-border)",
     background: "var(--button-bg)",
     color: "var(--button-text)",
-    padding: "0.75rem",
-    borderRadius: "12px",
+    padding: "0.8rem",
+    borderRadius: "14px",
     fontSize: "1.125rem",
-    fontWeight: 700,
+    fontWeight: 800,
     cursor: "pointer",
     boxShadow:
-      "0 4px 10px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.35)",
-    transition: "transform 120ms ease, box-shadow 120ms ease, background 160ms ease",
+      "0 6px 14px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.35)",
+    transition:
+      "transform 140ms var(--ease-soft, ease), box-shadow 140ms var(--ease-soft, ease), background 160ms var(--ease-soft, ease)",
     outline: "none",
   };
 
@@ -52,16 +53,59 @@ function KeyButton({ label, ariaLabel, variant = "digit", onPress }) {
 
   const style = { ...baseStyle, ...(variants[variant] || {}) };
 
+  // Ripple handler: set CSS vars for position, toggle class
+  const handleMouseDown = useCallback((e) => {
+    const btn = e.currentTarget;
+    const rect = btn.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    btn.style.setProperty("--ripple-x", `${x}%`);
+    btn.style.setProperty("--ripple-y", `${y}%`);
+    btn.classList.add("pressed");
+    btn.classList.add("rippling");
+  }, []);
+
+  const endRipple = useCallback((e) => {
+    const btn = e.currentTarget;
+    btn.classList.remove("pressed");
+    // Allow ripple fade-out to complete
+    window.requestAnimationFrame(() => {
+      btn.classList.remove("rippling");
+    });
+  }, []);
+
   return (
     <button
       type="button"
       className={`key-button key-${variant} focus-ring`}
       aria-label={ariaLabel}
+      aria-pressed="false"
       onClick={onPress}
       style={style}
-      onMouseDown={(e) => e.currentTarget.classList.add("pressed")}
-      onMouseUp={(e) => e.currentTarget.classList.remove("pressed")}
-      onBlur={(e) => e.currentTarget.classList.remove("pressed")}
+      onMouseDown={handleMouseDown}
+      onMouseUp={endRipple}
+      onMouseLeave={endRipple}
+      onBlur={endRipple}
+      onTouchStart={(e) => {
+        const btn = e.currentTarget;
+        const rect = btn.getBoundingClientRect();
+        const touch = e.touches[0];
+        const x = ((touch.clientX - rect.left) / rect.width) * 100;
+        const y = ((touch.clientY - rect.top) / rect.height) * 100;
+        btn.style.setProperty("--ripple-x", `${x}%`);
+        btn.style.setProperty("--ripple-y", `${y}%`);
+        btn.classList.add("pressed");
+        btn.classList.add("rippling");
+      }}
+      onTouchEnd={endRipple}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.currentTarget.classList.add("pressed");
+        }
+      }}
+      onKeyUp={(e) => {
+        e.currentTarget.classList.remove("pressed");
+      }}
     >
       <span>{label}</span>
     </button>

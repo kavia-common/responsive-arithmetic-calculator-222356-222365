@@ -34,6 +34,12 @@ body {
 button {
   font: inherit;
   color: inherit;
+  line-height: 1;
+}
+
+/* Improve contrast of disabled buttons if ever used */
+button:disabled {
+  opacity: 0.6;
 }
 
 /* Prefer reduced motion for users who opt-in */

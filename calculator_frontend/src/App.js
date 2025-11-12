@@ -20,7 +20,7 @@ function App() {
   };
 
   return (
-    <div className="App" role="main">
+    <div className="App" role="main" aria-label="Calculator application">
       <header className="App-header">
         <button
           className="theme-toggle focus-ring"
