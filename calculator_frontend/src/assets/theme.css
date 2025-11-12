@@ -1,0 +1,69 @@
+/* Ocean Professional - Playful Theme Tokens */
+:root {
+  --ocean-primary: #EC4899; /* Pink */
+  --ocean-secondary: #8B5CF6; /* Purple */
+  --ocean-success: #10B981; /* Emerald */
+  --ocean-error: #EF4444; /* Red */
+  --ocean-text: #374151; /* Slate 700 */
+  --ocean-background: #FDF2F8; /* Rose 50 */
+  --ocean-surface: #FFFFFF; /* White */
+
+  /* Scales */
+  --ocean-primary-500: #EC4899;
+  --ocean-primary-600: #DB2777;
+  --ocean-secondary-500: #8B5CF6;
+  --ocean-secondary-600: #7C3AED;
+  --ocean-success-500: #10B981;
+  --ocean-success-600: #059669;
+
+  --ocean-border: rgba(17, 24, 39, 0.12);
+
+  /* Buttons */
+  --button-bg: var(--ocean-surface);
+  --button-text: var(--ocean-text);
+
+  /* Focus ring */
+  --focus-ring: 0 0 0 3px rgba(139, 92, 246, 0.35), 0 0 1px 1px rgba(236, 72, 153, 0.25);
+
+  /* Gradients */
+  --ocean-gradient-a: linear-gradient(135deg, #FCE7F3 0%, #EDE9FE 50%, #DBEAFE 100%);
+  --ocean-gradient-strong: linear-gradient(135deg, rgba(236,72,153,0.12), rgba(139,92,246,0.12));
+  --ocean-surface-strong: #F8FAFC;
+}
+
+/* Background helpers */
+body {
+  background: var(--ocean-background);
+  color: var(--ocean-text);
+}
+
+/* Gradient surface wrapper for calculator container */
+.gradient-surface {
+  background:
+    var(--ocean-gradient-a),
+    var(--ocean-surface);
+  background-blend-mode: multiply;
+}
+
+/* Focus utilities */
+.focus-ring:focus {
+  box-shadow: var(--focus-ring);
+}
+
+/* Button pressed helper */
+.key-button.pressed {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.15);
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+  .calc-container {
+    margin: 1rem;
+    padding: 0.75rem;
+  }
+  .calc-display {
+    font-size: 1.75rem;
+    min-height: 56px;
+  }
+}
