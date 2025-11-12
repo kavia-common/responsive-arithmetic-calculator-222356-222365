@@ -2,25 +2,25 @@ import React from "react";
 import Display from "./Display";
 import Keypad from "./Keypad";
 import "../assets/theme.css";
+import { useCalculator } from "../hooks/useCalculator";
 
 /**
  * PUBLIC_INTERFACE
  * Calculator
- * A top-level component that composes Display and Keypad.
- * Currently wires placeholder no-op handlers; logic will be provided by useCalculator.
+ * A top-level component that composes Display and Keypad using the useCalculator hook.
  */
 function Calculator() {
-  // Placeholder state and handlers (no-ops for now)
-  const displayValue = "0";
-
-  const handleDigit = () => {};
-  const handleDecimal = () => {};
-  const handleOperator = () => {};
-  const handleEquals = () => {};
-  const handleClear = () => {};
-  const handleAllClear = () => {};
-  const handleBackspace = () => {};
-  const handleToggleSign = () => {};
+  const {
+    displayValue,
+    onDigit,
+    onDecimal,
+    onOperator,
+    onEquals,
+    onClear,
+    onAllClear,
+    onBackspace,
+    onToggleSign,
+  } = useCalculator();
 
   return (
     <div
@@ -44,14 +44,14 @@ function Calculator() {
         aria-live="polite"
       />
       <Keypad
-        onDigit={handleDigit}
-        onDecimal={handleDecimal}
-        onOperator={handleOperator}
-        onEquals={handleEquals}
-        onClear={handleClear}
-        onAllClear={handleAllClear}
-        onBackspace={handleBackspace}
-        onToggleSign={handleToggleSign}
+        onDigit={onDigit}
+        onDecimal={onDecimal}
+        onOperator={onOperator}
+        onEquals={onEquals}
+        onClear={onClear}
+        onAllClear={onAllClear}
+        onBackspace={onBackspace}
+        onToggleSign={onToggleSign}
       />
     </div>
   );
