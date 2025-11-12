@@ -1,13 +1,44 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* Global resets and typography baseline */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, "Noto Color Emoji", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  background: var(--ocean-background, #FDF2F8);
+  color: var(--ocean-text, #374151);
+}
+
+/* Provide visible focus outline for keyboard users */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring, 0 0 0 3px rgba(139, 92, 246, 0.35), 0 0 1px 1px rgba(236, 72, 153, 0.25));
+  border-radius: 10px;
+}
+
+/* Make buttons accessible by default */
+button {
+  font: inherit;
+  color: inherit;
+}
+
+/* Prefer reduced motion for users who opt-in */
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within {
+    scroll-behavior: auto;
+  }
 }
